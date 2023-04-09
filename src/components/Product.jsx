@@ -10,12 +10,9 @@ function Product(props) {
   return (
     <div className="product" key={id}>
       <div className="product__info">
-        <strong>{title}</strong>
-        <div>
-          <small>£</small>
-          <strong>{price}</strong>
-        </div>
-
+        <p className="product__title">{title}</p>
+        <small>£</small>
+        <strong>{price}</strong>
         <div className="product__rating">{rate}</div>
       </div>
       <img src={src} alt="product-images" />
