@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { IoBasket } from "react-icons/io5";
 import { MdStorefront } from "react-icons/md";
 import { AiOutlineSearch } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import AppContext from "./Context";
 
 function Header() {
+  const { basket } = useContext(AppContext);
+
   return (
     <div className="header">
       <Link to="/" className="link">
@@ -18,18 +21,24 @@ function Header() {
         <AiOutlineSearch className="header__searchIcon" />
       </div>
       <div className="header__nav">
-        <div className="nav__item">
-          <span className="nav__itemLineOne">Hello Guest</span>
-          <span className="nav__itemLineTwo">Sign In</span>
-        </div>
-        <div className="nav__item">
-          <span className="nav__itemLineOne">Your</span>
-          <span className="nav__itemLineTwo">Shop</span>
-        </div>
+        <Link to="/login" className="link">
+          <div className="nav__item">
+            <span className="nav__itemLineOne">Hello Guest</span>
+            <span className="nav__itemLineTwo">Sign In</span>
+          </div>
+        </Link>
+        <Link to="/checkout" className="link">
+          <div className="nav__item">
+            <span className="nav__itemLineOne">Your</span>
+            <span className="nav__itemLineTwo">Shop</span>
+          </div>
+        </Link>
         <Link to="/checkout" className="link">
           <div className="nav__itemBasket">
             <IoBasket className="nav__basketIcon" />
-            <span className="nav__itemLineTwo nav__basketCount">0</span>
+            <span className="nav__itemLineTwo nav__basketCount">
+              {basket.length}
+            </span>
           </div>
         </Link>
       </div>
