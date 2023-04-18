@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
+import AppContext from "./Context";
 
 function Subtotal() {
+  const { basket } = useContext(AppContext);
+  const subtotal = basket.reduce(
+    (total, eachItem) => total + eachItem.price,
+    0
+  );
   return (
     <div className="subtotal">
       <p>
-        Subtotal(0 items):
-        <strong> £0</strong>
+        Subtotal({basket.length} items):
+        <strong> £{subtotal}</strong>
       </p>
       <small className="subtotal__gift">
         <input type="checkbox" name="" id="subtotal__input" />
