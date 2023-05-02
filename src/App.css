@@ -17,7 +17,8 @@ body {
   display: flex;
   align-items: center;
   background-color: #131921;
-  /* position: sticky; */
+  position: fixed;
+  width: 100%;
   top: 0;
   z-index: 100;
 }
@@ -115,6 +116,7 @@ body {
 .home {
   margin-left: auto;
   margin-right: auto;
+  margin-top: 80px;
   max-width: 1500px;
 }
 
@@ -183,6 +185,7 @@ body {
   justify-content: space-around;
   padding: 20px;
   height: max-content;
+  margin-top: 80px;
 }
 
 .checkout__ad {
@@ -307,37 +310,51 @@ body {
   border-radius: 5px;
 }
 
-/* -------------- Subtotal -------------- */
+/* -------------- Login -------------- */
 
 .login__container {
+  height: 70vh;
   width: 300px;
-  height: fit-content;
+  background-color: white;
+  padding: 20px;
+  margin: 100px auto 0 auto;
+  align-items: center;
+  border-radius: 5px;
+  border: 1px solid lightgray;
+}
+
+.login__container > form {
   display: flex;
   flex-direction: column;
 }
 
 .login__container > h1 {
-  font-weight: 500;
   margin-bottom: 20px;
 }
 
 .login__container > form > label {
-  margin-bottom: 5px;
+  font-weight: bolder;
 }
 
 .login__container > form > input {
   height: 30px;
-  margin-bottom: 10px;
-  background-color: white;
+  margin-bottom: 20px;
   width: 98%;
 }
 
 .login__button {
-  background-color: #ff9f00;
   border-radius: 2px;
   width: 100%;
   height: 30px;
   border: 1px solid;
   margin-top: 10px;
+}
+
+.login__signInButton {
+  background: #ff9f00;
   border-color: #a88734 #9c7e31 #846a29;
+}
+
+.login__registerButton {
+  border-color: darkgray;
 }

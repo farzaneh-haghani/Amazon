@@ -3,10 +3,9 @@ import AppContext from "./Context";
 
 function Subtotal() {
   const { basket } = useContext(AppContext);
-  const subtotal = basket.reduce(
-    (total, eachItem) => total + eachItem.price,
-    0
-  );
+  const subtotal = basket
+    .reduce((total, eachItem) => total + eachItem.price, 0)
+    .toFixed(2);
   return (
     <div className="subtotal">
       <p>
