@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import AppContext from "./Context";
 
 function Header() {
-  const { basket } = useContext(AppContext);
+  const { basket, isLogin } = useContext(AppContext);
 
   return (
     <div className="header">
@@ -24,7 +24,9 @@ function Header() {
         <Link to="/login" className="link">
           <div className="nav__item">
             <span className="nav__itemLineOne">Hello Guest</span>
-            <span className="nav__itemLineTwo">Sign In</span>
+            <span className="nav__itemLineTwo">
+              {!isLogin ? "Sign In" : "Sign Out"}
+            </span>
           </div>
         </Link>
         <Link to="/checkout" className="link">

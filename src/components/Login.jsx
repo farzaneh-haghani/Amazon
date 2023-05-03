@@ -1,38 +1,76 @@
-import React, { useState } from "react";
-import { auth, googleProvider } from "../config/firebase";
+import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
+  getAuth,
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
   signInWithPopup,
-  signOut,
+  GoogleAuthProvider,
 } from "firebase/auth";
+import { app, provider } from "../config/firebase";
+import AppContext from "./Context";
 
 function Login() {
+  const navigate = useNavigate();
+  const { setIsLogin } = useContext(AppContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const register = async (event) => {
-    event.preventDefault();
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
-    } catch (err) {
-      console.error(err);
-    }
+  const auth = getAuth(app);
+
+  const register = (e) => {
+    e.preventDefault();
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        if (user) {
+          setIsLogin(true);
+          navigate("/");
+        }
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert(errorMessage);
+      });
   };
 
-  const signInWithGoogle = async () => {
-    try {
-      await signInWithPopup(auth, googleProvider);
-    } catch (err) {
-      console.error(err);
-    }
+  const emailSignIn = (e) => {
+    e.preventDefault();
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        if (user) {
+          setIsLogin(true);
+          navigate("/");
+        }
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert(errorMessage);
+      });
   };
 
-  const logOut = async () => {
-    try {
-      await signOut(auth);
-    } catch (err) {
-      console.error(err);
-    }
+  const signInWithGoogle = (e) => {
+    e.preventDefault();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        const user = result.user;
+        if (user) {
+          setIsLogin(true);
+          navigate("/");
+        }
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.customData.email;
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        alert(credential);
+      });
   };
 
   return (
@@ -58,7 +96,12 @@ function Login() {
           onChange={(event) => setPassword(event.target.value)}
           required
         />
-        <button className="login__button login__signInButton">Sign In</button>
+        <button
+          className="login__button login__signInButton"
+          onClick={emailSignIn}
+        >
+          Sign In
+        </button>
         <button
           className="login__button login__registerButton"
           onClick={register}
@@ -67,9 +110,6 @@ function Login() {
         </button>
         <button className="login__button" onClick={signInWithGoogle}>
           Sign In with Google
-        </button>
-        <button className="login__button" onClick={logOut}>
-          Sign Out
         </button>
       </form>
     </div>

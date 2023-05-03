@@ -11,8 +11,9 @@ import './App.css';
 
 function App() {
   const [basket, setBasket] = useState([]);
+  const [isLogin, setIsLogin] = useState(false);
   return (
-    <AppContext.Provider value={{ basket, setBasket }}>
+    <AppContext.Provider value={{ basket, setBasket, isLogin, setIsLogin }}>
       <Router>
         <Header />
         <Routes>
